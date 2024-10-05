@@ -28,10 +28,10 @@ let estampilla, pez;
 let imagenes = []
 
 function preload() {
-    estampilla = loadImage('/assets/imaginar/patas.png')
+    estampilla = loadImage('../assets/imaginar/patas.png')
     imagenes.push(estampilla);
-    pez = loadImage('/assets/tecnoextractivismo/phone.png')
-    martillo = loadImage('/assets/tecnoextractivismo/martillo.png')
+    pez = loadImage('../assets/tecnoextractivismo/phone.png')
+    martillo = loadImage('../assets/tecnoextractivismo/martillo.png')
     let prob = random();
     imagenes.push(prob > 0.5 ? martillo : pez);
 }
