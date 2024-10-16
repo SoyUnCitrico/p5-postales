@@ -1,1 +1,9 @@
 /.vscode
+.vscode
+assets
+
+*.png
+*.jpeg
+*.jpg
+*.ttf
+*.gif
