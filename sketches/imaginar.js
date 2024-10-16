@@ -21,14 +21,15 @@ let peces = [];
 let stars = [];
 let colorStars = '#bfc195';
 let colorText = '#bfc195a0';
+let colorPatas = '#b1005e';
 let colorFondo = '#21202429';
 let colorFondo2 = '#232325';
 let colorBack = colorFondo2;
 let patasPixel;
-let timerSpace = 3000;
+let timerSpace = 7000;  //timer del efecto despues de teclear
 
 let shadowPeces, shadowPatas;
-let textoInfo = "Manifiesto por algoritmias hackfeministas (Liliana Zaragoza y Akhmatova, 2018)";
+let textoInfo = "Manifiesto por algoritmias hackfeministas\n(Liliana Zaragoza y Akhmatova, 2018)";
 let textEspaciado = addLetterSpacing(textoInfo,1)
 let textTyped = textEspaciado;
 let initSpeed = 5;
@@ -62,7 +63,7 @@ function setup() {
     let cnv = createCanvas(widthCanvas, heightCanvas);
     cnv.parent("canvasContainer")
     shadowPez = makeShadow(pez, 8, "#6d6e62", 0.8); 
-    shadowPatas = makeShadow(patas, 12, "#66674f", 0.2);   
+    shadowPatas = makeShadow(patas, 20, "#66674f", 0.6);   
     
     angleMode(RADIANS);
     imageMode(CENTER);
@@ -83,22 +84,13 @@ function setup() {
 }
 
 function draw() {
-  if(teclasFlag) {
-    background(colorFondo);  
-  } else {
-    background(colorFondo2);  
-  }
-    push();
-    stroke(colorText);
-    fill(colorText);
-    textAlign(CENTER);
-    textSize(24);
-    // textStyle(BOLD);
-    text(textTyped, width/2, height * 0.7, 800,350); 
-    pop();
-    
-    textSize(20);
-    textAlign(LEFT);
+    if(teclasFlag) {
+      background(colorFondo);  
+    } else {
+      background(colorFondo2);  
+    }    
+
+    // ESTRELLAS
     for (let i = 0; i < stars.length; i++) {      
       stars[i].update();
       stars[i].showChar(lastChar);
@@ -112,8 +104,20 @@ function draw() {
             peces[i].pasearImage('REVERSE_XY', pez, 140, 200);
         }
     }
-    // push();
 
+    // LETRAS DEL CENTRO 
+    push();
+    textAlign(CENTER)
+    textStyle(BOLD)
+    textSize(25);
+    stroke(colorPatas);
+    fill(colorPatas);
+    text(textTyped, width/2, height * 0.7, 800,350); 
+    pop();
+    textSize(16);
+    textAlign(LEFT);
+
+    // TIMER EFECTO DELAY
     ahorita = Date.now();
     if(teclasFlag == true && (ahorita - teclasTime) > timerSpace) {
       teclasFlag = false;
@@ -123,13 +127,7 @@ function draw() {
     // console.log("TECLAS FLAG ", teclasFlag)
 
     if(keyIsPressed) {
-      if(peces.length > 0) {
-        for(let i = 0; i < numPeces; i++) {
-            // peces[i].temblar(10,2,'REVERSE_XY');
-            peces[i].pasearImage('REVERSE_XY', shadowPez, 140, 200)            
-            peces[i].pasearImage('REVERSE_XY', pez, 140, 200);
-        }
-      }      
+     
     }
 }
 
@@ -198,6 +196,7 @@ function keyPressed() {
       case 8: //backspace
       case 46: //delete
           if(tecleado == false && teclasFlag == false) {
+            textTyped = textEspaciado;
             // console.log("!AQUI")
             break;
           }

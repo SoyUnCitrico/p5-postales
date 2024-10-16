@@ -21,7 +21,7 @@ let respuestas = [
 ]
 let instrucciones = 'Escribe con el teclado';
 preguntas.length
-let askIndex = 0;
+let askIndex = askNumber;
 let counterIndex = 0;
 let textArray = respuestas[askIndex];
 let estampilla, pez;
@@ -41,11 +41,13 @@ function setup() {
     // createCanvas(1920, 1080);
     frameRate(FRAME_RATE);
     
-    setInterval(() =>{    
-        askIndex ++;
-        if(askIndex > preguntas.length - 1) askIndex = 0;
-        textArray = respuestas[askIndex]
-    }, (segundosCambio + 1) * 1000)
+
+    // Reloj del cambio global
+    // setInterval(() =>{    
+    //     askIndex ++;
+    //     if(askIndex > preguntas.length - 1) askIndex = 0;
+    //     textArray = respuestas[askIndex]
+    // }, (segundosCambio + 1) * 1000)
     
     setInterval(() =>{    
         counterIndex ++;
@@ -312,4 +314,4 @@ function addLetterSpacing(input, amount, spacer) {
     // use join() to combine characters with the spacer
     // and send back as a string
     return characters.join(spacerCharacter);
-  }
+}
