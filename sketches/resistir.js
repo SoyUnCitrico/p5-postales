@@ -23,7 +23,7 @@ let colorBack = colorFondo;
 let fuente1, fuente2, bell, typed1, returnSound;
 let info = 'El oráculo de tecnologías\ntransfeministas\n(2020)';
 let info2 = '¿Cómo resistir a sistemas que monitorean, vigilan, prescriben y dictaminan nuestro paso por la vida digital y por el mundo?'
-let instrucciones = 'Escribe con el teclado';
+let instrucciones = 'Escribe con el teclado y presiona ENTER para guardar tu mensaje';
 
 function preload() {    
   resImg = loadImage('https://soyuncitrico.github.io/p5-postales/assets/oraculo/valores.gif');
