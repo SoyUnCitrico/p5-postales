@@ -5,7 +5,7 @@ const Y_AXIS = 1;
 const X_AXIS = 2;
 const DEBUG = false;
 // const globalUri = 'https://script.google.com/macros/s/AKfycbwd7zmOST4O4o6pWhqWQQjIqwWfS_B_qzvL2THuiB-tlgFwNz9_cbEgFqHBQ0CJv9bJ/exec';
-const globalUri = 'https://script.google.com/macros/s/AKfycbylesmMMCM6DdBC0Lm5fI-fyIKhxOcBFihNwSMfOiQ5k5Gv3zYM9-2ZUPxezpT2vcq1Hg/exec;'
+const globalUri = 'https://script.google.com/macros/s/AKfycbylesmMMCM6DdBC0Lm5fI-fyIKhxOcBFihNwSMfOiQ5k5Gv3zYM9-2ZUPxezpT2vcq1Hg/exec';
 let angle = 0;
 let angleAumento = 0.005;
 
@@ -20,19 +20,23 @@ let tecladoBounceTime = 0;
 
 let colorMargin= '#4a3487';
 let colorBack = colorFondo;
-
+let fuente1, fuente2, bell, typed1, returnSound;
 let info = 'El oráculo de tecnologías\ntransfeministas\n(2020)';
 let info2 = '¿Cómo resistir a sistemas que monitorean, vigilan, prescriben y dictaminan nuestro paso por la vida digital y por el mundo?'
 let instrucciones = 'Escribe con el teclado';
-let textArray = instrucciones
+
 function preload() {    
   resImg = loadImage('/assets/oraculo/valores.gif');
+  typed1 = loadSound('/assets/sounds/typing.mp3');
+  bell = loadSound('/assets/sounds/bell.mp3');
+  returnSound = loadSound('/assets/sounds/return.mp3');
 }
 
 function setup() {
     let cnv = createCanvas(widthCanvas, heightCanvas);
     cnv.parent("canvasContainer") 
     teclado = new Teclado(instrucciones, instrucciones)
+    teclado.setSound(typed1,bell, returnSound);
     teclado.setSendData();
     teclado.setColor(colorResp);
     textFont('Courier New');
@@ -53,15 +57,14 @@ function setup() {
 function draw() {
     background(colorBack);   
     if(teclado.loadingResponse) {
-      push();
-      
+      push();    
       imageMode(CENTER);
       image(resImg,widthCanvas/2, heightCanvas/2, resImg.width * 0.4, resImg.height * 0.4);
       fill(colorResp);
-      textSize(60);
-      textAlign(CENTER);
+      textSize(60);      
       textStyle(BOLD);
-      text("ENVIANDO DATOS...",widthCanvas/2, heightCanvas/2);
+      textAlign(CENTER);  
+      text("*** ENVIANDO DATOS ***",widthCanvas/2, heightCanvas/2);
       pop();
     } else {
       image(resImg,width * 0.27, height/2, resImg.width * (factorImage + 0.0675), resImg.height * (factorImage));   
@@ -70,24 +73,26 @@ function draw() {
       stroke(colorText);
       fill(colorText);
       textSize(26);
-      text(info, width * 0.73, height * 0.13);
-      noStroke();
-      textSize(18);
-      textLeading(22);
       textAlign(CENTER);  
+      text(info, width * 0.73, height * 0.13);      
+      textSize(18);
+      textLeading(22);    
       text(info2, width * 0.73, height * 0.36, width * 0.42, height * 0.2);
       pop();
   
       drawMargin(35, colorMargin, 'black');
       drawLines(10, 1, colorMargin, false);
-      if(tecleado) {
-        // drawText(textArray, createVector(width * 0.72, height * 0.66), width * 0.34, 370,colorResp);
+      push();
+      if(tecleado) {        
+        stroke(colorResp);
         teclado.setColor(colorResp)
-      } else {
-        // drawText(textArray, createVector(width * 0.72, height * 0.66), width * 0.34, 370,colorRespPlace);
+        
+      } else {        
+        stroke(colorRespPlace);
         teclado.setColor(colorRespPlace)
-      }
+      }      
       teclado.drawText(width * 0.72, height * 0.66, width * 0.34, 370);
+      pop();
   
 
     }
@@ -99,60 +104,7 @@ function keyPressed() {
   if(!tecleado) {
     tecleado = true;
   }
-  teclado.selectKey(keyCode,key,6);
-  // console.log(keyCode)
-  // switch(keyCode) {    
-  //     case 8: //backspace
-  //     case 46: //delete
-  //         if(tecleado == false) textArray = '';
-  //         textArray = textArray.slice(0, -1);
-  //         break;
-  //     case 9: //tab
-  //       textArray += "\t";
-  //       break;
-  //     case 13: //enter
-  //         textArray += "\n";
-  //         break;
-  //     case 0: //dead
-  //     case 16: //shift
-  //     case 17: //control
-  //     case 18: //ALT
-  //     case 20: //capslock
-  //     case 27: //esc
-  //     case 33: //pageup
-  //     case 34: //pagedown
-  //     case 35: //end
-  //     case 36: //home
-  //     case 37: //arrows
-  //     case 38: //
-  //     case 39: //
-  //     case 40: //
-  //     case 112: // F1
-  //     case 113:
-  //     case 114:
-  //     case 115:
-  //     case 116:
-  //     case 117:
-  //     case 118:
-  //     case 119:
-  //     case 120:
-  //     case 121:
-  //     case 122:
-  //     case 123:
-  //     case 219: //dead
-  //     case 225: //alt graph
-  //         break;
-  //     default:
-  //         // console.log(key)
-  //         if(!tecleado) {
-  //           tecleado = true;
-  //           textArray = '';
-  //         }
-  //         textArray += (key);
-  //         // console.log(textArray)
-  // }  
-  
-  
+  teclado.selectKey(keyCode, key, 6);
 }
 
 

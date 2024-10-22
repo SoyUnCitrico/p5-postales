@@ -1,5 +1,6 @@
 const anchoMargen = 35;
 const colorSobre = '#071e5c';
+const colorSobreInstrucciones = 'rgba(7, 30, 92, 0.25)';
 const colorFondo = '#ecd9c9';
 const FRAME_RATE = 30
 let tecleado;
@@ -12,13 +13,18 @@ const heightCanvas = 768;
 // const widthCanvas = 1920;
 // const heightCanvas = 1080;
 let segundosCambio = 60;
+let textEnter = '*** Presiona "Enter" para guardar tu mensaje ***'
 let preguntas = [
     "¿Cómo imaginas el futuro que te gustaría habitar?",
+    "",
+    "",
     "En el juego de los grandes intereses del capital, la Amazonía es un territorio que hay que despojar, y sus pueblos, cuerpos que hay que exterminar."
 ]
 
 let respuestas = [
     "Podemos pensarnos desde un pasado y un futuro que se articulen de manera no lineal.",
+    "",
+    "",
     "Indisociabilidad del cuerpo-territorio, ríos, bosques, inmensidad, vasos comunicantes, saberes, cuerpos, colores, lenguas, textiles, arte, música, sacralidad, sensibilidad, rituales, violencias históricas y a escala, crisis civilizatoria, proyecto necropolítico, eficiencia, despojo."
 ]
 let instrucciones = 'Escribe con el teclado';
@@ -26,16 +32,24 @@ preguntas.length
 let askIndex = askNumber;
 let counterIndex = 0;
 let textArray = respuestas[askIndex];
-let estampilla, pez, animation;
-let imagenes = []
+let estampilla, pez, anim;
+let imagenes = [];
+let imageIndex = 0;
+let fuente1, fuente2, bell, typed1, returnSound;
 
 function preload() {
-    animation = loadImage('./../assets/oraculo/valores.gif')
+    anim = loadImage('./../assets/oraculo/valores.gif')
     estampilla = loadImage('./../assets/imaginar/patas.png')
     imagenes.push(estampilla);
     pez = loadImage('./../assets/tecnoextractivismo/phone.png')
     martillo = loadImage('./../assets/tecnoextractivismo/martillo.png')
-    let prob = random();
+    
+    typed1 = loadSound('/assets/sounds/typing.mp3');
+    bell = loadSound('/assets/sounds/bell.mp3');
+    returnSound = loadSound('/assets/sounds/return.mp3');
+
+    let prob = Math.random();
+    imageIndex = prob > 0.5 ? 1 : 0;
     imagenes.push(prob > 0.5 ? martillo : pez);
 }
 
@@ -52,7 +66,9 @@ function setup() {
     // }, (segundosCambio + 1) * 1000)x
     teclado = new Teclado(respuestas[askIndex], respuestas[askIndex]);
     teclado.setColor(colorSobre);
+    teclado.setColorInstruction(colorSobreInstrucciones);
     teclado.setSendData();
+    teclado.setSound(typed1,bell, returnSound);
     setInterval(() =>{    
         counterIndex ++;
         if(counterIndex == segundosCambio + 1) counterIndex = 0;
@@ -64,20 +80,26 @@ function draw() {
   if(teclado.loadingResponse) {
     push();
     imageMode(CENTER);
-    image(animation,widthCanvas/2, heightCanvas/2, animation.width * 0.4, animation.height * 0.4);
+    image(anim, widthCanvas/2, heightCanvas/2, anim.width * 0.35, anim.height * 0.3);
+    
+    textAlign(CENTER);
+    textStyle(BOLD);
+    fill(colorSobre);
+    stroke(colorSobre)
+    textSize(60);
+    text("--- ENVIANDO DATOS ---", widthCanvas/2, heightCanvas/2);
+    
     pop();
   } else {
         drawSeilWaves(12,1,colorSobre);
-        drawSeil(width * 0.2, height * 0.20, 120, colorSobre, colorFondo);
-    
+        drawSeil(widthCanvas * 0.2, heightCanvas * 0.20, 120, colorSobre, colorFondo);
         drawMargin(anchoMargen, colorSobre, 'black')
         drawWaves(5, 1, colorSobre);
         drawLines(10, 1, colorSobre);
-        drawText(preguntas[askIndex], respuestas[askIndex], colorSobre);
-    
+        drawText(preguntas[askIndex], colorSobre);
         push();
-        translate(width - imagenes[askIndex].width * 0.41, height * 0.15)
-        image(imagenes[askIndex],0,0, imagenes[askIndex].width * 0.27, imagenes[askIndex].height * 0.27); 
+        translate(width - imagenes[imageIndex].width * 0.41, height * 0.15)        
+        image(imagenes[imageIndex],0,0, imagenes[imageIndex].width * 0.27, imagenes[imageIndex].height * 0.27); 
         pop();
     }
   
@@ -223,35 +245,42 @@ const drawLines = (numberLines = 5, weightStk = 2, colorLine = 'black') => {
     pop();
 }
 
-const drawText = (pregunta = "", respuesta = "", colorText = 'black') => {
+const drawText = (pregunta = "", colorText = 'black') => {
     push();
+    ///////// ENTER
     stroke(colorText);
     fill(colorText);
-    textWrap(WORD);
+    // textWrap(WORD);
     textFont('Courier New');
+    textAlign(CENTER);
+    textSize(14);
+    text(textEnter, widthCanvas * 0.5, heightCanvas * 0.085);
+    text(textEnter, widthCanvas * 0.5, heightCanvas * 0.92);
+    ///////// PREGUNTA    
     textSize(24);
     textLeading(36);
-    textStyle(BOLD);
-    textAlign(CENTER);
-    let estaPregunta = addLetterSpacing(pregunta, 0); 
+    textStyle(BOLD);    
+    let estaPregunta = addLetterSpacing(pregunta, 1); 
     //   let estaPregunta = preguntas[0]; 
     text(estaPregunta, widthCanvas * 0.08, heightCanvas * 0.4 + 16, widthCanvas * 0.35, heightCanvas * 0.8);
-
-    // textWrap(CHAR);
-    textFont('Courier New');
-    textSize(17);
-    textLeading(31);
-    textStyle(NORMAL);
-    textAlign(LEFT);
-    
-    // text(textArray, widthCanvas * 0.55, heightCanvas * 0.4 + 16, widthCanvas * 0.35, heightCanvas * 0.4);
-    teclado.drawText(widthCanvas * 0.55, heightCanvas * 0.4 + 16, widthCanvas * 0.35, heightCanvas * 0.4);
+    ///////// CONTADOR
     let contador = segundosCambio - counterIndex;
     textAlign(CENTER);
-    textFont('Courier New');
     textSize(40);
     textLeading(1);
     text(contador, width * 0.152, height * 0.175, 100, 100)
+    pop();
+
+    push();
+    ///////// RESPUESTA
+    textSize(17);
+    textLeading(31);
+    textStyle(NORMAL);    
+    textAlign(LEFT);      
+    textFont('Courier New');
+    teclado.drawText(widthCanvas * 0.55, heightCanvas * 0.4 + 16, widthCanvas * 0.35, heightCanvas * 0.4);
+    
+    ///////// RECTANGULO DE PRUEBA
     //   noFill();
     //   rect(widthCanvas * 0.55, heightCanvas * 0.4 + 16, widthCanvas * 0.35, heightCanvas * 0.4);
     pop();
@@ -259,56 +288,6 @@ const drawText = (pregunta = "", respuesta = "", colorText = 'black') => {
 
 function keyPressed() {  
     teclado.selectKey(keyCode, key, askNumber + 1);
-//   switch(keyCode) {    
-//       case 8: //backspace
-//       case 46: //delete
-//           if(tecleado == false) textArray = '';
-//           textArray = textArray.slice(0, -1);
-//           break;
-//       case 9: //tab
-//         textArray += "\t";
-//         break;
-//       case 13: //enter
-//           textArray += "\n";
-//           break;
-//       case 0: //dead
-//       case 16: //shift
-//       case 17: //control
-//       case 18: //ALT
-//       case 20: //capslock
-//       case 27: //esc
-//       case 33: //pageup
-//       case 34: //pagedown
-//       case 35: //end
-//       case 36: //home
-//       case 37: //arrows
-//       case 38: //
-//       case 39: //
-//       case 40: //
-//       case 112: // F1
-//       case 113:
-//       case 114:
-//       case 115:
-//       case 116:
-//       case 117:
-//       case 118:
-//       case 119:
-//       case 120:
-//       case 121:
-//       case 122:
-//       case 123:
-//       case 219: //dead
-//       case 225: //alt graph
-//           break;
-//       default:
-//           // console.log(key)
-//           if(!tecleado) {
-//             tecleado = true;
-//             textArray = '';
-//           }
-//           textArray += (key);
-//         //   console.log(textArray)
-//   }  
 }
 
 // adds spacing between letters in a string by

@@ -20,7 +20,8 @@ let milpas = [];
 // let yI;
 let humanPosition;
 let shadow, shadowMilpa;
-let textRef = '"...el colonialismo como estructura de poder continúa, porque invade el universo mental de un pueblo..."\n';
+let textEnter = `- Presiona ENTER para guardar tu mensaje -`
+let textRef = '" ...el colonialismo como estructura de poder continúa, porque invade el universo mental de un pueblo... "';
 let textRef2 = '¿Qué crees que este pasando aquí?'
 let textoInfo = "Felipe Guamán Poma de\nAyala, Nueva Crónica\ny Buen Gobierno,\n México: Siglo XXI, 1980.";
 
@@ -53,7 +54,7 @@ function setup() {
     cnv.parent("canvasContainer")
     shadow = makeShadow(human, 6, "#3e3a33", 0.8); 
     shadowMilpa = makeShadow(milpa, 4, "#3a362f", 0.95);   
-    teclado = new Teclado('Habia una vez...', 'Durante la cosecha del maiz...');
+    teclado = new Teclado('Durante la cosecha del maiz...', 'Durante la cosecha del maiz...');
     if(DEBUG) { teclado.setDebug()}
     teclado.setSound(typed1,bell, returnSound);
     teclado.setSendData();
@@ -61,14 +62,9 @@ function setup() {
     randomMilpas();
     resetSketch();
 
-    setInterval(() => {
-        // xI = random(width * 0.285, ((width * 0.285) + width * 0.457));
-        // yI = random(height * 0.64, ((height * 0.64) + height * 0.3));
-        resetSketch();
-        
-    }, 60000)
-
-    
+    // setInterval(() => {
+    //     resetSketch();        
+    // }, 60000)
 }
 function resetSketch(numMilpasSketch = numOriginalMilpas) {
     const xHP = width * 0.85
@@ -80,10 +76,21 @@ function resetSketch(numMilpasSketch = numOriginalMilpas) {
 
 
 function draw() {
+    
     if(teclado.loadingResponse) {
-        image(col, widthCanvas /2, heightCanvas/2, col.width * 1.7, col.height * 1.7)
+        background(255);
+        push();
+        textAlign(CENTER);
+        image(col, widthCanvas /2, heightCanvas * 0.55, col.width * 1.4, col.height * 1.4)
+        // fill(0,0,120);
+        fill(0);
+        noStroke();
+        textSize(60);
+        textFont(fuente1);
+        text('*** Guardando respuesta ***', widthCanvas * 0.5, heightCanvas * 0.1);
+        pop();
     } else {
-        // FONDO|
+        // FONDO
         setGradient(0,0,widthCanvas,heightCanvas, color('rgba(157, 132, 109, 1)'), color('rgba(190, 168, 134, 1)'), X_AXIS)
         image(img, widthCanvas * 0.4, heightCanvas / 2, img.width * 1.5, img.height * 1.5 ) 
     
@@ -120,29 +127,37 @@ function draw() {
     
         // TEXTO INFO
         push();
-        fill('black');
-        stroke('black');
-        textAlign(RIGHT);
+        fill(50);
+        stroke(50);        
         textSize(18);
         textFont('Courier New');
-        // textStyle(BOLD);
-        text(textoInfo, widthCanvas * 0.985, heightCanvas * 0.89); 
-    
+        textAlign(RIGHT);
+        textWrap(WORD)
+        text(textoInfo, widthCanvas * 0.985, heightCanvas * 0.89);
+
+        stroke(50);
+        fill(50);
+        textSize(20);
+        textLeading(18);
+        textAlign(LEFT);
+        textWrap(CHAR)
+        text(textEnter, widthCanvas * 0.05, heightCanvas * 0.007, widthCanvas * 0.012, heightCanvas);
+        pop();
+
+        push();
         // TEXTO INstrucciones
-        fill('black');
-        stroke('black');
+        fill(0);
+        noStroke();
         textAlign(CENTER);
         textSize(20);
         textFont(fuente1);
         // textStyle(BOLD);
         text(textRef, widthCanvas * 0.71, heightCanvas * 0.06, widthCanvas * 0.29, heightCanvas * 0.7);
         
-        fill('black');
-        stroke('black');
         textAlign(CENTER);
         textSize(24);
         textFont(fuente1);
-        // textStyle(BOLD);
+        textStyle(BOLD);
         text(textRef2, width * 0.71, height * 0.23, widthCanvas * 0.27, heightCanvas * 0.7);
     
         pop();
