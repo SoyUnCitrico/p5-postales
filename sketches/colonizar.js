@@ -3,31 +3,37 @@ const heightCanvas = 768;
 
 const Y_AXIS = 1;
 const X_AXIS = 2;
-
-let img, human, milpa;
+// const globalUri = 'https://script.google.com/macros/s/AKfycbwd7zmOST4O4o6pWhqWQQjIqwWfS_B_qzvL2THuiB-tlgFwNz9_cbEgFqHBQ0CJv9bJ/exec';
+const globalUri = 'https://script.google.com/macros/s/AKfycbylesmMMCM6DdBC0Lm5fI-fyIKhxOcBFihNwSMfOiQ5k5Gv3zYM9-2ZUPxezpT2vcq1Hg/exec';
+let img, human, milpa, col;
 let angle = 0;
 let angleAumento = 0.005;
 let angleHuman = 0;
 let angleHumanAumento = 0.031;
 let DEBUG = false;
-let tecleado;
-let tecladoBounceTime = 0;
-let textTyped = '';
-
+let isFlipped = false;
+let teclado;
+let fuente1, fuente2, bell, typed1, returnSound;
 const numOriginalMilpas = 12;
-let numMilpas = numOriginalMilpas;
 let milpas = [];
 // let xI;
 // let yI;
 let humanPosition;
 let shadow, shadowMilpa;
-
+let textRef = '"...el colonialismo como estructura de poder continúa, porque invade el universo mental de un pueblo..."\n';
+let textRef2 = '¿Qué crees que este pasando aquí?'
 let textoInfo = "Felipe Guamán Poma de\nAyala, Nueva Crónica\ny Buen Gobierno,\n México: Siglo XXI, 1980.";
 
 function preload() {
     img = loadImage('/assets/colonizar/back.png');
     human = loadImage('/assets/colonizar/human.png');
     milpa = loadImage('/assets/colonizar/milpa.png');
+    col = loadImage('/assets/colonizar/colonia.jpeg');
+    fuente1 = loadFont('/assets/fonts/remington_type.ttf');
+    fuente2 = loadFont('/assets/fonts/mom_type.ttf');
+    typed1 = loadSound('/assets/sounds/typing.mp3');
+    bell = loadSound('/assets/sounds/bell.mp3');
+    returnSound = loadSound('/assets/sounds/return.mp3');
 }
 
 function randomMilpas(numMilpas) {
@@ -47,9 +53,12 @@ function setup() {
     cnv.parent("canvasContainer")
     shadow = makeShadow(human, 6, "#3e3a33", 0.8); 
     shadowMilpa = makeShadow(milpa, 4, "#3a362f", 0.95);   
-
+    teclado = new Teclado('Habia una vez...', 'Durante la cosecha del maiz...');
+    if(DEBUG) { teclado.setDebug()}
+    teclado.setSound(typed1,bell, returnSound);
+    teclado.setSendData();
     imageMode(CENTER)
-    randomMilpas(numOriginalMilpas);
+    randomMilpas();
     resetSketch();
 
     setInterval(() => {
@@ -61,84 +70,104 @@ function setup() {
 
     
 }
-function resetSketch() {
+function resetSketch(numMilpasSketch = numOriginalMilpas) {
     const xHP = width * 0.85
     const yHP = height - human.height
     humanPosition = createVector(xHP, yHP)
-    randomMilpas(numOriginalMilpas);
-    numMilpas = numOriginalMilpas;
+    randomMilpas(numMilpasSketch);
+    isFlipped = false;
 }
+
+
 function draw() {
-    // FONDO|
-    setGradient(0,0,widthCanvas,heightCanvas, color('rgba(157, 132, 109, 1)'), color('rgba(190, 168, 134, 1)'), X_AXIS)
-    image(img, widthCanvas * 0.4, heightCanvas / 2, img.width * 1.5, img.height * 1.5 ) 
-
-    // MILPAS
-    if(milpas.length > 0) {
-        for(let i = 0; i < numMilpas; i++) {
-            push();
-            translate(milpas[i].x, milpas[i].y);
-            rotate(angle);
-            image(shadowMilpa,0,0,120,180);
-            image(milpa ,0 ,0,120, 180)
-            if(DEBUG) {
-                strokeWeight(5);
-                stroke('blue');
-                point(0,0);            
+    if(teclado.loadingResponse) {
+        image(col, widthCanvas /2, heightCanvas/2, col.width * 1.7, col.height * 1.7)
+    } else {
+        // FONDO|
+        setGradient(0,0,widthCanvas,heightCanvas, color('rgba(157, 132, 109, 1)'), color('rgba(190, 168, 134, 1)'), X_AXIS)
+        image(img, widthCanvas * 0.4, heightCanvas / 2, img.width * 1.5, img.height * 1.5 ) 
+    
+        // MILPAS
+        if(milpas.length > 0) {
+            for(let i = 0; i < milpas.length; i++) {
+                push();
+                translate(milpas[i].x, milpas[i].y);
+                rotate(angle);
+                image(shadowMilpa,0,0,120,180);
+                image(milpa ,0 ,0,120, 180)
+                if(DEBUG) {
+                    strokeWeight(5);
+                    stroke('blue');
+                    point(0,0);            
+                }
+                pop();
             }
-            pop();
         }
-    }
+        
+        // SEGADOR
+        push();
+        translate(humanPosition.x, humanPosition.y - human.height * 0.45);
+        if(isFlipped) scale(-1, 1);
+        rotate(angleHuman + 0.2);
+        image(shadow ,0 ,0, human.width * 1.2, human.height * 1.2)
+        image(human, 0, 0, human.width * 1.2, human.height * 1.2);
+        if(DEBUG) {
+            strokeWeight(5);
+            stroke('red');
+            point(0,0);
+        }
+        pop();
     
-    // SEGADOR
-    push();
-    translate(humanPosition.x, humanPosition.y - human.height * 0.45);
-    rotate(angleHuman + 0.2);
-    image(shadow ,0 ,0, human.width * 1.2, human.height * 1.2)    
-    image(human, 0, 0, human.width * 1.2, human.height * 1.2);
-    if(DEBUG) {
-        strokeWeight(5);
-        stroke('red');
-        point(0,0);
-    }
-    pop();
-
-    // TEXTO INFO
-    push();
-    fill('black');
-    stroke('black');
-    textAlign(RIGHT);
-    textSize(18);
-    textFont('Courier New');
-    // textStyle(BOLD);
-    text(textoInfo, width * 0.985, height * 0.89); 
-    pop();
+        // TEXTO INFO
+        push();
+        fill('black');
+        stroke('black');
+        textAlign(RIGHT);
+        textSize(18);
+        textFont('Courier New');
+        // textStyle(BOLD);
+        text(textoInfo, widthCanvas * 0.985, heightCanvas * 0.89); 
     
-    // TEXTO TYPED
-    push();
-    fill('black');
-    textAlign(LEFT);
-    textSize(18);
-    textFont('Courier New');
-    textStyle(NORMAL);
-    text(textTyped, width * 0.72, height * 0.1, width * 0.26, height * 0.7); 
-    pop();
-
-    if(keyIsPressed) {
-        angleHuman += angleHumanAumento;
-        if(keyCode == 8 && tecleado) 
-            textTyped = textTyped.slice(0, -1);
-        if (textTyped.length == 0) {
-            tecleado = false;
-            textTyped = '';
-        } 
-    }
-    angle += angleAumento;    
-    if(angle > (PI / 32) || angle < ( - PI / 32)) {
-        angleAumento = angleAumento * (-1);
-    }
-    if(angleHuman > (PI / 64) || angleHuman < ( - PI / 10)) {
-        angleHumanAumento = angleHumanAumento * (-1);
+        // TEXTO INstrucciones
+        fill('black');
+        stroke('black');
+        textAlign(CENTER);
+        textSize(20);
+        textFont(fuente1);
+        // textStyle(BOLD);
+        text(textRef, widthCanvas * 0.71, heightCanvas * 0.06, widthCanvas * 0.29, heightCanvas * 0.7);
+        
+        fill('black');
+        stroke('black');
+        textAlign(CENTER);
+        textSize(24);
+        textFont(fuente1);
+        // textStyle(BOLD);
+        text(textRef2, width * 0.71, height * 0.23, widthCanvas * 0.27, heightCanvas * 0.7);
+    
+        pop();
+        
+        // TEXTO TYPED
+        push();
+        fill('black');
+        textAlign(LEFT);
+        textSize(18);
+        textFont(fuente1);
+        textStyle(BOLD);
+        // text(textTyped, width * 0.72, height * 0.1, width * 0.26, height * 0.7); 
+        teclado.drawText(width * 0.72, height * 0.35, width * 0.26, height * 0.7)
+        pop();
+    
+        if(keyIsPressed) {
+            angleHuman += angleHumanAumento;
+        }
+        angle += angleAumento;    
+        if(angle > (PI / 32) || angle < ( - PI / 32)) {
+            angleAumento = angleAumento * (-1);
+        }
+        if(angleHuman > (PI / 64) || angleHuman < ( - PI / 10)) {
+            angleHumanAumento = angleHumanAumento * (-1);
+        }
     }
 }
 
@@ -175,77 +204,52 @@ function makeShadow(img, sigma, shadowColor, opacity) {
   }
 
 function keyPressed() {
-    switch(keyCode) {
-        case 67: //letra c
-            textTyped += (key);
-            if(!tecleado) {
-                tecleado = true;
-            }
-            if(milpas.length < 1) {
-                randomMilpas(numOriginalMilpas);
-                numMilpas = numOriginalMilpas;
-            }
-            humanPosition = milpas[milpas.length - 1].copy();
-            numMilpas--;
-            milpas.splice(-1);
-            break;
-        case 82: //tecla r
-            textTyped += (key);
-            if(!tecleado) {
-                tecleado = true;
-            }
-            resetSketch();
-            break;
-        case 8: //backspace
-        case 46: //delete
-            if(tecleado == false) textTyped = '';
-            textTyped = textTyped.slice(0, -1);
-            break;
-        case 9: //tab
-            textTyped += "\t";
-            break;
-        case 13: //enter
-            textTyped += "\n";
-            break;
-        case 0: //dead
-        case 16: //shift
-        case 17: //control
-        case 18: //ALT
-        case 20: //capslock
-        case 27: //esc
-        case 33: //pageup
-        case 34: //pagedown
-        case 35: //end
-        case 36: //home
-        case 37: //arrows
-        case 38: //
-        case 39: //
-        case 40: //
-        case 112: // F1
-        case 113:
-        case 114:
-        case 115:
-        case 116:
-        case 117:
-        case 118:
-        case 119:
-        case 120:
-        case 121:
-        case 122:
-        case 123:
-        case 219: //dead
-        case 225: //alt graph
-            break;
-        default:
-            // console.log(key)
-            if(!tecleado) {
-                tecleado = true;
-                textTyped = '';
-            }
-            textTyped += (key);
-            // console.log(textTyped)
-            if(DEBUG) console.log(keyCode); 
+    if(
+        // (keyCode === 67) //letra c
+        (keyCode !== 65)
+        && (keyCode !== 69)
+        && (keyCode !== 73)
+        && (keyCode !== 79)
+        && (keyCode !== 85)
+        && (keyCode !== 8)
+        && (keyCode !== 46)
+        && (keyCode !== 13)
+        && (keyCode !== 48)
+        && (keyCode !== 49)
+        && (keyCode !== 50)
+        && (keyCode !== 51)
+        && (keyCode !== 52)
+        && (keyCode !== 53)
+        && (keyCode !== 54)
+        && (keyCode !== 55)
+        && (keyCode !== 56)
+        && (keyCode !== 57)
+        && (keyCode !== 186)
+        && (keyCode !== 219)
+    ) { 
+        if(milpas.length < 1) {
+            randomMilpas(numOriginalMilpas);
+        }
+        humanPosition = milpas[milpas.length - 1].copy();
+        milpas.splice(-1);                    
     }
+    if(
+        (keyCode === 70)
+        || (keyCode === 86)
+        || (keyCode === 67)
+        || (keyCode === 192)
+        || (keyCode === 90)
+        || (keyCode === 226)
+    ) {
+        isFlipped = !isFlipped
+    }
+
+    if(keyCode === 87) {
+        resetSketch(80);
+    }
+
+    teclado.selectKey(keyCode,key, 2);
+    
 }
 
 
