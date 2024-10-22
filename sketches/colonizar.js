@@ -26,15 +26,15 @@ let textRef2 = '¿Qué crees que este pasando aquí?'
 let textoInfo = "Felipe Guamán Poma de\nAyala, Nueva Crónica\ny Buen Gobierno,\n México: Siglo XXI, 1980.";
 
 function preload() {
-    img = loadImage('assets/colonizar/back.png');
-    human = loadImage('assets/colonizar/human.png');
-    milpa = loadImage('assets/colonizar/milpa.png');
-    col = loadImage('assets/colonizar/colonia.jpeg');
-    fuente1 = loadFont('assets/fonts/remington_type.ttf');
-    fuente2 = loadFont('assets/fonts/mom_type.ttf');
-    typed1 = loadSound('assets/sounds/typing.mp3');
-    bell = loadSound('assets/sounds/bell.mp3');
-    returnSound = loadSound('assets/sounds/return.mp3');
+    img = loadImage('p5-postales/assets/colonizar/back.png');
+    human = loadImage('p5-postales/assets/colonizar/human.png');
+    milpa = loadImage('p5-postales/assets/colonizar/milpa.png');
+    col = loadImage('p5-postales/assets/colonizar/colonia.jpeg');
+    fuente1 = loadFont('p5-postales/assets/fonts/remington_type.ttf');
+    fuente2 = loadFont('p5-postales/assets/fonts/mom_type.ttf');
+    typed1 = loadSound('p5-postales/assets/sounds/typing.mp3');
+    bell = loadSound('p5-postales/assets/sounds/bell.mp3');
+    returnSound = loadSound('p5-postales/assets/sounds/return.mp3');
 }
 
 function randomMilpas(numMilpas) {
