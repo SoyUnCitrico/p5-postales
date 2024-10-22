@@ -1,11 +1,4 @@
 /.vscode
 .vscode
-assets
 
-*.png
-*.jpeg
-*.jpg
-*.ttf
-*.gif
-*.mp3
 *.wav
