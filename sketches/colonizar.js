@@ -30,7 +30,7 @@ function preload() {
     human = loadImage('https://soyuncitrico.github.io/p5-postales/assets/colonizar/human.png');
     milpa = loadImage('https://soyuncitrico.github.io/p5-postales/assets/colonizar/milpa.png');
     col = loadImage('https://soyuncitrico.github.io/p5-postales/assets/colonizar/colonia.jpeg');
-    fuente1 = loadFont('https://soyuncitrico.github.io/p5-postales/assets/fonts/remington_type.ttf');
+    fuente1 = loadFont('https://soyuncitrico.github.io/p5-postales/assets/fonts/remington_Type.ttf');
     fuente2 = loadFont('https://soyuncitrico.github.io/p5-postales/assets/fonts/mom_type.ttf');
     typed1 = loadSound('https://soyuncitrico.github.io/p5-postales/assets/sounds/typing.mp3');
     bell = loadSound('https://soyuncitrico.github.io/p5-postales/assets/sounds/bell.mp3');
