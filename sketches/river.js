@@ -30,9 +30,9 @@ function preload() {
     // fontPixel = loadFont("../assets/fonts/mom_type.ttf")
     fontPixel = loadFont("../assets/fonts/1942.ttf")
     // fontPixel = loadFont("../assets/fonts/remington_Type.ttf")
-    typed1 = loadSound('/assets/sounds/typing.mp3');
-    bell = loadSound('/assets/sounds/bell.mp3');
-    returnSound = loadSound('/assets/sounds/return.mp3');
+    typed1 = loadSound('../assets/sounds/typing.mp3');
+    bell = loadSound('../assets/sounds/bell.mp3');
+    returnSound = loadSound('../assets/sounds/return.mp3');
 }
 
 function setup() {

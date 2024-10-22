@@ -25,9 +25,9 @@ let phoneOpacityStep = -3;
 let phoneOpacityLimit = -200;
 
 function preload() {
-    img = loadImage('/assets/tecnoextractivismo/back.png');
-    martillo = loadImage('/assets/tecnoextractivismo/martillo.png');
-    phone = loadImage('/assets/tecnoextractivismo/phone.png');
+    img = loadImage('../assets/tecnoextractivismo/back.png');
+    martillo = loadImage('../assets/tecnoextractivismo/martillo.png');
+    phone = loadImage('../assets/tecnoextractivismo/phone.png');
 }
 
 function randomMilpas(numMilpas) {
