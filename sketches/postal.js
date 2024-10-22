@@ -4,7 +4,8 @@ const colorFondo = '#ecd9c9';
 const FRAME_RATE = 30
 let tecleado;
 let tecladoBounceTime = 0;
-
+let teclado;
+const globalUri = 'https://script.google.com/macros/s/AKfycbwd7zmOST4O4o6pWhqWQQjIqwWfS_B_qzvL2THuiB-tlgFwNz9_cbEgFqHBQ0CJv9bJ/exec';
 const widthCanvas = 1024;
 const heightCanvas = 768;
 // const widthCanvas = 1920;
@@ -24,10 +25,11 @@ preguntas.length
 let askIndex = askNumber;
 let counterIndex = 0;
 let textArray = respuestas[askIndex];
-let estampilla, pez;
+let estampilla, pez, animation;
 let imagenes = []
 
 function preload() {
+    animation = loadImage('./../assets/oraculo/valores.gif')
     estampilla = loadImage('./../assets/imaginar/patas.png')
     imagenes.push(estampilla);
     pez = loadImage('./../assets/tecnoextractivismo/phone.png')
@@ -41,43 +43,52 @@ function setup() {
     // createCanvas(1920, 1080);
     frameRate(FRAME_RATE);
     
-
     // Reloj del cambio global
     // setInterval(() =>{    
     //     askIndex ++;
     //     if(askIndex > preguntas.length - 1) askIndex = 0;
     //     textArray = respuestas[askIndex]
-    // }, (segundosCambio + 1) * 1000)
-    
+    // }, (segundosCambio + 1) * 1000)x
+    teclado = new Teclado(respuestas[askIndex], respuestas[askIndex]);
+    teclado.setColor(colorSobre);
+    teclado.setSendData();
     setInterval(() =>{    
         counterIndex ++;
         if(counterIndex == segundosCambio + 1) counterIndex = 0;
     }, 1000)
 }
 
-function draw() {
+function draw() {    
   background(colorFondo);
-  drawSeilWaves(12,1,colorSobre);
-  drawSeil(width * 0.2, height * 0.20, 120, colorSobre, colorFondo);
+  if(teclado.loadingResponse) {
+    push();
+    imageMode(CENTER);
+    image(animation,widthCanvas/2, heightCanvas/2, animation.width * 0.4, animation.height * 0.4);
+    pop();
+  } else {
+        drawSeilWaves(12,1,colorSobre);
+        drawSeil(width * 0.2, height * 0.20, 120, colorSobre, colorFondo);
+    
+        drawMargin(anchoMargen, colorSobre, 'black')
+        drawWaves(5, 1, colorSobre);
+        drawLines(10, 1, colorSobre);
+        drawText(preguntas[askIndex], respuestas[askIndex], colorSobre);
+    
+        push();
+        translate(width - imagenes[askIndex].width * 0.41, height * 0.15)
+        image(imagenes[askIndex],0,0, imagenes[askIndex].width * 0.27, imagenes[askIndex].height * 0.27); 
+        pop();
+    }
+  
 
-  drawMargin(anchoMargen, colorSobre, 'black')
-  drawWaves(5, 1, colorSobre);
-  drawLines(10, 1, colorSobre);
-  drawText(preguntas[askIndex], respuestas[askIndex], colorSobre);
- 
-  push();
-  translate(width - imagenes[askIndex].width * 0.41, height * 0.15)
-  image(imagenes[askIndex],0,0, imagenes[askIndex].width * 0.27, imagenes[askIndex].height * 0.27); 
-  pop();
-
-  if(keyIsPressed) {
-    if(keyCode == 8 && tecleado && textArray !== respuestas[askIndex]) 
-      textArray = textArray.slice(0, -1);
-      if (textArray.length == 0) {
-        tecleado = false;
-        textArray = respuestas[askIndex]
-      } 
-  }
+//   if(keyIsPressed) {
+//     if(keyCode == 8 && tecleado && textArray !== respuestas[askIndex]) 
+//       textArray = textArray.slice(0, -1);
+//       if (textArray.length == 0) {
+//         tecleado = false;
+//         textArray = respuestas[askIndex]
+//       } 
+//   }
 }
 
 const drawSeil = (x,y, diametroBase = 120, colorCircle = 'black', colorFill = 'white') => {    
@@ -232,8 +243,8 @@ const drawText = (pregunta = "", respuesta = "", colorText = 'black') => {
     textStyle(NORMAL);
     textAlign(LEFT);
     
-    text(textArray, widthCanvas * 0.55, heightCanvas * 0.4 + 16, widthCanvas * 0.35, heightCanvas * 0.4);
-    
+    // text(textArray, widthCanvas * 0.55, heightCanvas * 0.4 + 16, widthCanvas * 0.35, heightCanvas * 0.4);
+    teclado.drawText(widthCanvas * 0.55, heightCanvas * 0.4 + 16, widthCanvas * 0.35, heightCanvas * 0.4);
     let contador = segundosCambio - counterIndex;
     textAlign(CENTER);
     textFont('Courier New');
@@ -246,57 +257,57 @@ const drawText = (pregunta = "", respuesta = "", colorText = 'black') => {
 }
 
 function keyPressed() {  
-//   console.log(keyCode)
-  switch(keyCode) {    
-      case 8: //backspace
-      case 46: //delete
-          if(tecleado == false) textArray = '';
-          textArray = textArray.slice(0, -1);
-          break;
-      case 9: //tab
-        textArray += "\t";
-        break;
-      case 13: //enter
-          textArray += "\n";
-          break;
-      case 0: //dead
-      case 16: //shift
-      case 17: //control
-      case 18: //ALT
-      case 20: //capslock
-      case 27: //esc
-      case 33: //pageup
-      case 34: //pagedown
-      case 35: //end
-      case 36: //home
-      case 37: //arrows
-      case 38: //
-      case 39: //
-      case 40: //
-      case 112: // F1
-      case 113:
-      case 114:
-      case 115:
-      case 116:
-      case 117:
-      case 118:
-      case 119:
-      case 120:
-      case 121:
-      case 122:
-      case 123:
-      case 219: //dead
-      case 225: //alt graph
-          break;
-      default:
-          // console.log(key)
-          if(!tecleado) {
-            tecleado = true;
-            textArray = '';
-          }
-          textArray += (key);
-        //   console.log(textArray)
-  }  
+    teclado.selectKey(keyCode, key, askNumber + 1);
+//   switch(keyCode) {    
+//       case 8: //backspace
+//       case 46: //delete
+//           if(tecleado == false) textArray = '';
+//           textArray = textArray.slice(0, -1);
+//           break;
+//       case 9: //tab
+//         textArray += "\t";
+//         break;
+//       case 13: //enter
+//           textArray += "\n";
+//           break;
+//       case 0: //dead
+//       case 16: //shift
+//       case 17: //control
+//       case 18: //ALT
+//       case 20: //capslock
+//       case 27: //esc
+//       case 33: //pageup
+//       case 34: //pagedown
+//       case 35: //end
+//       case 36: //home
+//       case 37: //arrows
+//       case 38: //
+//       case 39: //
+//       case 40: //
+//       case 112: // F1
+//       case 113:
+//       case 114:
+//       case 115:
+//       case 116:
+//       case 117:
+//       case 118:
+//       case 119:
+//       case 120:
+//       case 121:
+//       case 122:
+//       case 123:
+//       case 219: //dead
+//       case 225: //alt graph
+//           break;
+//       default:
+//           // console.log(key)
+//           if(!tecleado) {
+//             tecleado = true;
+//             textArray = '';
+//           }
+//           textArray += (key);
+//         //   console.log(textArray)
+//   }  
 }
 
 // adds spacing between letters in a string by
