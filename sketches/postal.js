@@ -38,15 +38,15 @@ let imageIndex = 0;
 let fuente1, fuente2, bell, typed1, returnSound;
 
 function preload() {
-    anim = loadImage('assets/oraculo/valores.gif')
-    estampilla = loadImage('assets/imaginar/patas.png')
+    anim = loadImage('https://soyuncitrico.github.io/p5-postales/assets/oraculo/valores.gif')
+    estampilla = loadImage('https://soyuncitrico.github.io/p5-postales/assets/imaginar/patas.png')
     imagenes.push(estampilla);
-    pez = loadImage('assets/tecnoextractivismo/phone.png')
-    martillo = loadImage('assets/tecnoextractivismo/martillo.png')
+    pez = loadImage('https://soyuncitrico.github.io/p5-postales/assets/tecnoextractivismo/phone.png')
+    martillo = loadImage('https://soyuncitrico.github.io/p5-postales/assets/tecnoextractivismo/martillo.png')
     
-    typed1 = loadSound('assets/sounds/typing.mp3');
-    bell = loadSound('assets/sounds/bell.mp3');
-    returnSound = loadSound('assets/sounds/return.mp3');
+    typed1 = loadSound('https://soyuncitrico.github.io/p5-postales/assets/sounds/typing.mp3');
+    bell = loadSound('https://soyuncitrico.github.io/p5-postales/assets/sounds/bell.mp3');
+    returnSound = loadSound('https://soyuncitrico.github.io/p5-postales/assets/sounds/return.mp3');
 
     let prob = Math.random();
     imageIndex = prob > 0.5 ? 1 : 0;

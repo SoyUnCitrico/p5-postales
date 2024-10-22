@@ -37,8 +37,8 @@ let endSpeed = 40;
 
 
 function preload() {
-    patas = loadImage('../assets/imaginar/patas.png');
-    pez = loadImage('../assets/imaginar/pez.png');
+    patas = loadImage('https://soyuncitrico.github.io/p5-postales/assets/imaginar/patas.png');
+    pez = loadImage('https://soyuncitrico.github.io/p5-postales/assets/imaginar/pez.png');
 }
 
 function randomPeces(numPeces) {

@@ -26,10 +26,10 @@ let info2 = '¿Cómo resistir a sistemas que monitorean, vigilan, prescriben y d
 let instrucciones = 'Escribe con el teclado';
 
 function preload() {    
-  resImg = loadImage('../assets/oraculo/valores.gif');
-  typed1 = loadSound('../assets/sounds/typing.mp3');
-  bell = loadSound('../assets/sounds/bell.mp3');
-  returnSound = loadSound('../assets/sounds/return.mp3');
+  resImg = loadImage('https://soyuncitrico.github.io/p5-postales/assets/oraculo/valores.gif');
+  typed1 = loadSound('https://soyuncitrico.github.io/p5-postales/assets/sounds/typing.mp3');
+  bell = loadSound('https://soyuncitrico.github.io/p5-postales/assets/sounds/bell.mp3');
+  returnSound = loadSound('https://soyuncitrico.github.io/p5-postales/assets/sounds/return.mp3');
 }
 
 function setup() {

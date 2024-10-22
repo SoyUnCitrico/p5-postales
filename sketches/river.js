@@ -24,15 +24,15 @@ let teclado;
 let bell, typed1, returnSound;
 
 function preload() {
-    amazonas = loadImage("../assets/mapas/amazonas.jpg");
-    // fontComputer = loadFont("../assets/fonts/retro.ttf")
-    // fontPixel = loadFont("../assets/fonts/pixel-7.ttf")
-    // fontPixel = loadFont("../assets/fonts/mom_type.ttf")
-    fontPixel = loadFont("../assets/fonts/1942.ttf")
-    // fontPixel = loadFont("../assets/fonts/remington_Type.ttf")
-    typed1 = loadSound('../assets/sounds/typing.mp3');
-    bell = loadSound('../assets/sounds/bell.mp3');
-    returnSound = loadSound('../assets/sounds/return.mp3');
+    amazonas = loadImage("https://soyuncitrico.github.io/p5-postales/assets/mapas/amazonas.jpg");
+    // fontComputer = loadFont("https://soyuncitrico.github.io/p5-postales/assets/fonts/retro.ttf")
+    // fontPixel = loadFont("https://soyuncitrico.github.io/p5-postales/assets/fonts/pixel-7.ttf")
+    // fontPixel = loadFont("https://soyuncitrico.github.io/p5-postales/assets/fonts/mom_type.ttf")
+    fontPixel = loadFont("https://soyuncitrico.github.io/p5-postales/assets/fonts/1942.ttf")
+    // fontPixel = loadFont("https://soyuncitrico.github.io/p5-postales/assets/fonts/remington_Type.ttf")
+    typed1 = loadSound('https://soyuncitrico.github.io/p5-postales/assets/sounds/typing.mp3');
+    bell = loadSound('https://soyuncitrico.github.io/p5-postales/assets/sounds/bell.mp3');
+    returnSound = loadSound('https://soyuncitrico.github.io/p5-postales/assets/sounds/return.mp3');
 }
 
 function setup() {
