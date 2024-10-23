@@ -14,10 +14,10 @@ let sendingData = false;
 
 function preload() {
     soundFormats('mp3', 'ogg');
-    animation = loadImage('../assets/oraculo/valores.gif');
-    fuente1 = loadFont('../assets/fonts/remington_type.ttf');
-    typed1 = loadSound('../assets/sounds/typing');
-    bell = loadSound('../assets/sounds/bell');
+    animation = loadImage('https://soyuncitrico.github.io/p5-postales/assets/oraculo/valores.gif');
+    fuente1 = loadFont('https://soyuncitrico.github.io/p5-postales/assets/fonts/remington_type.ttf');
+    typed1 = loadSound('https://soyuncitrico.github.io/p5-postales/assets/sounds/typing');
+    bell = loadSound('https://soyuncitrico.github.io/p5-postales/assets/sounds/bell');
 }   
 
 function setup() {
