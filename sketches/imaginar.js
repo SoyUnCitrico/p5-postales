@@ -8,8 +8,8 @@ const endSpeed = 20;
 const textoInfo = "Manifiesto por algoritmias hackfeministas\n(Liliana Zaragoza y Akhmatova, 2018)";
 const textoInfo2 = 'El futuro también es un territorio en disputa.';
 const instruciones = 'Presiona ENTER para guardar tu mensaje';
-// const globalUri = 'https://script.google.com/macros/s/AKfycbwd7zmOST4O4o6pWhqWQQjIqwWfS_B_qzvL2THuiB-tlgFwNz9_cbEgFqHBQ0CJv9bJ/exec';
-const globalUri = 'https://script.google.com/macros/s/AKfycbylesmMMCM6DdBC0Lm5fI-fyIKhxOcBFihNwSMfOiQ5k5Gv3zYM9-2ZUPxezpT2vcq1Hg/exec';
+const globalUri = 'https://script.google.com/macros/s/AKfycbwd7zmOST4O4o6pWhqWQQjIqwWfS_B_qzvL2THuiB-tlgFwNz9_cbEgFqHBQ0CJv9bJ/exec';
+// const globalUri = 'https://script.google.com/macros/s/AKfycbylesmMMCM6DdBC0Lm5fI-fyIKhxOcBFihNwSMfOiQ5k5Gv3zYM9-2ZUPxezpT2vcq1Hg/exec';
 
 let fondo, patas, pez;
 let fuente1, fuente2, bell, typed1, returnSound;
@@ -42,8 +42,8 @@ const infoEspaciado = addLetterSpacing(textoInfo, 2);
 function preload() {
     patas = loadImage('https://soyuncitrico.github.io/p5-postales/assets/imaginar/patas.png');
     pez = loadImage('https://soyuncitrico.github.io/p5-postales/assets/imaginar/pez.png');
-    // fondo = loadImage('https://soyuncitrico.github.io/p5-postales/assets/imaginar/all.jpg');
-    fondo = loadImage('../assets/imaginar/all.jpg');
+    fondo = loadImage('https://soyuncitrico.github.io/p5-postales/assets/imaginar/all.jpg');
+    // fondo = loadImage('../assets/imaginar/all.jpg');
     // shadowPez = makeShadow(pez, 8, "#6d6e62", 0.8);
     // shadowPatas = makeShadow(patas, 20, "#66674f", 0.6);
 

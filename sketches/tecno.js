@@ -4,8 +4,8 @@ const heightCanvas = 768;
 const Y_AXIS = 1;
 const X_AXIS = 2;
 
-// const globalUri = 'https://script.google.com/macros/s/AKfycbwd7zmOST4O4o6pWhqWQQjIqwWfS_B_qzvL2THuiB-tlgFwNz9_cbEgFqHBQ0CJv9bJ/exec';
-const globalUri = 'https://script.google.com/macros/s/AKfycbylesmMMCM6DdBC0Lm5fI-fyIKhxOcBFihNwSMfOiQ5k5Gv3zYM9-2ZUPxezpT2vcq1Hg/exec';
+const globalUri = 'https://script.google.com/macros/s/AKfycbwd7zmOST4O4o6pWhqWQQjIqwWfS_B_qzvL2THuiB-tlgFwNz9_cbEgFqHBQ0CJv9bJ/exec';
+// const globalUri = 'https://script.google.com/macros/s/AKfycbylesmMMCM6DdBC0Lm5fI-fyIKhxOcBFihNwSMfOiQ5k5Gv3zYM9-2ZUPxezpT2vcq1Hg/exec';
 
 let img, img2, martillo, phone;
 let angle = 0;
@@ -29,10 +29,10 @@ let bell, typed1, returnSound;
 let teclado;
 
 function preload() {
-    // img = loadImage('https://soyuncitrico.github.io/p5-postales/assets/tecnoextractivismo/rpi.png');
-    img = loadImage('../assets/tecnoextractivismo/rpi.png');
-    // martillo = loadImage('https://soyuncitrico.github.io/p5-postales/assets/tecnoextractivismo/hammer.png');
-    martillo = loadImage('../assets/tecnoextractivismo/hammer.png');
+    img = loadImage('https://soyuncitrico.github.io/p5-postales/assets/tecnoextractivismo/rpi.png');
+    // img = loadImage('../assets/tecnoextractivismo/rpi.png');
+    martillo = loadImage('https://soyuncitrico.github.io/p5-postales/assets/tecnoextractivismo/hammer.png');
+    // martillo = loadImage('../assets/tecnoextractivismo/hammer.png');
     phone = loadImage('https://soyuncitrico.github.io/p5-postales/assets/tecnoextractivismo/phone.png');
     fuente1 = loadFont('https://soyuncitrico.github.io/p5-postales/assets/fonts/remington_Type.ttf');
     fuente2 = loadFont('https://soyuncitrico.github.io/p5-postales/assets/fonts/mom_type.ttf');
