@@ -12,18 +12,12 @@ const globalUri = 'https://script.google.com/macros/s/AKfycbwd7zmOST4O4o6pWhqWQQ
 // const globalUri = 'https://script.google.com/macros/s/AKfycbylesmMMCM6DdBC0Lm5fI-fyIKhxOcBFihNwSMfOiQ5k5Gv3zYM9-2ZUPxezpT2vcq1Hg/exec';
 
 let fondo, patas, pez;
+let shadowPeces, shadowPatas;
 let fuente1, fuente2, bell, typed1, returnSound;
-let angle = 0;
-let angleAumento = 0.005;
-let angleHuman = 0;
-let angleHumanAumento = 0.0045;
-
 let teclasFlag = false;
 let teclasTime = Date.now();
 let ahorita = teclasTime;
 let teclado;
-
-
 let lastChar = '.'
 let numPeces = numOriginalPeces;
 let peces = [];
@@ -36,7 +30,6 @@ let colorFondo2 = '#0f0f10';
 let colorBack = colorFondo2;
 let patasPixel;
 
-let shadowPeces, shadowPatas;
 const infoEspaciado = addLetterSpacing(textoInfo, 2);
 
 function preload() {
@@ -79,7 +72,7 @@ function setup() {
     teclado.setColorInstruction(color(colorPatas));
     teclado.setSound(typed1,bell, returnSound);
     teclado.setSendData(globalUri);
-    teclado.setDebug();
+    // teclado.setDebug();
     textFont('Courier New');
     angleMode(RADIANS);
     imageMode(CENTER);
@@ -124,14 +117,15 @@ function draw() {
     pop();
 
     // ESTRELLAS
-    push();
+    // push();
     textSize(14);
-    textAlign(LEFT);
+    // textAlign(LEFT);
     for (let i = 0; i < stars.length; i++) {      
       stars[i].update();
+      // stars[i].show();
       stars[i].showChar(lastChar);
     }
-    pop();
+    // pop();
 
     // PATAS
     patasPixel.pasearImage('REVERSE_XY', shadowPatas, patas.width * 0.75, patas.height * 0.75, false) 
