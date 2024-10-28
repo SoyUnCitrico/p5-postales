@@ -3,7 +3,7 @@ const heightCanvas = 768;
 
 const Y_AXIS = 1;
 const X_AXIS = 2;
-
+const opacityInit = 220;
 const globalUri = 'https://script.google.com/macros/s/AKfycbwd7zmOST4O4o6pWhqWQQjIqwWfS_B_qzvL2THuiB-tlgFwNz9_cbEgFqHBQ0CJv9bJ/exec';
 // const globalUri = 'https://script.google.com/macros/s/AKfycbylesmMMCM6DdBC0Lm5fI-fyIKhxOcBFihNwSMfOiQ5k5Gv3zYM9-2ZUPxezpT2vcq1Hg/exec';
 
@@ -19,7 +19,7 @@ let anglePhoneAumento = 0.05;
 
 let instrucciones = '¿Cómo resistir a sistemas que monitorean, vigilan, prescriben y dictaminan nuestro paso por la vida digital y por el mundo? ';
 
-let phoneOpacity = 220;
+let phoneOpacity = opacityInit;
 let phoneOpacityStep = -4;
 let phoneOpacityLimit = 0;
 
@@ -97,6 +97,7 @@ function draw() {
          
 
     } else {
+        phoneOpacity = opacityInit;
         background('#f9f9ec');
         push();
         textAlign(CENTER);
