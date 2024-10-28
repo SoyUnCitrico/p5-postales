@@ -6,11 +6,12 @@ const numStars = 1000;
 const initSpeed = 5;
 const endSpeed = 20;
 const textoInfo = "Manifiesto por algoritmias hackfeministas\n(Liliana Zaragoza y Akhmatova, 2018)";
+const textoInfo2 = 'El futuro también es un territorio en disputa.';
 const instruciones = 'Presiona ENTER para guardar tu mensaje';
 // const globalUri = 'https://script.google.com/macros/s/AKfycbwd7zmOST4O4o6pWhqWQQjIqwWfS_B_qzvL2THuiB-tlgFwNz9_cbEgFqHBQ0CJv9bJ/exec';
 const globalUri = 'https://script.google.com/macros/s/AKfycbylesmMMCM6DdBC0Lm5fI-fyIKhxOcBFihNwSMfOiQ5k5Gv3zYM9-2ZUPxezpT2vcq1Hg/exec';
 
-let img, human, milpa;
+let fondo, patas, pez;
 let fuente1, fuente2, bell, typed1, returnSound;
 let angle = 0;
 let angleAumento = 0.005;
@@ -30,7 +31,7 @@ let stars = [];
 let colorStars = '#bfc19569';
 let colorText = '#bfc195a0';
 let colorPatas = '#b1005e';
-let colorFondo = '#0f0f1021';
+let colorFondo = '#0f0f102e';
 let colorFondo2 = '#0f0f10';
 let colorBack = colorFondo2;
 let patasPixel;
@@ -41,8 +42,10 @@ const infoEspaciado = addLetterSpacing(textoInfo, 2);
 function preload() {
     patas = loadImage('https://soyuncitrico.github.io/p5-postales/assets/imaginar/patas.png');
     pez = loadImage('https://soyuncitrico.github.io/p5-postales/assets/imaginar/pez.png');
-    shadowPez = makeShadow(pez, 8, "#6d6e62", 0.8);
-    shadowPatas = makeShadow(patas, 20, "#66674f", 0.6);
+    // fondo = loadImage('https://soyuncitrico.github.io/p5-postales/assets/imaginar/all.jpg');
+    fondo = loadImage('../assets/imaginar/all.jpg');
+    // shadowPez = makeShadow(pez, 8, "#6d6e62", 0.8);
+    // shadowPatas = makeShadow(patas, 20, "#66674f", 0.6);
 
     fuente1 = loadFont('https://soyuncitrico.github.io/p5-postales/assets/fonts/remington_Type.ttf');
     fuente2 = loadFont('https://soyuncitrico.github.io/p5-postales/assets/fonts/mom_type.ttf');
@@ -69,14 +72,14 @@ function randomPeces(numPeces) {
 function setup() {
     let cnv = createCanvas(widthCanvas, heightCanvas);
     cnv.parent("canvasContainer")
-    // shadowPez = makeShadow(pez, 8, "#6d6e62", 0.8);
-    // shadowPatas = makeShadow(patas, 20, "#66674f", 0.6);
-    teclado = new Teclado(instruciones, instruciones);
+    shadowPez = makeShadow(pez, 5, "#bcbea6", 1);
+    shadowPatas = makeShadow(patas, 10, "#cbc69c", 1);
+    teclado = new Teclado(textoInfo2, instruciones);
     teclado.setColor(color(colorPatas));
     teclado.setColorInstruction(color(colorPatas));
     teclado.setSound(typed1,bell, returnSound);
     teclado.setSendData(globalUri);
-    // teclado.setDebug();
+    teclado.setDebug();
     textFont('Courier New');
     angleMode(RADIANS);
     imageMode(CENTER);
@@ -94,6 +97,7 @@ function setup() {
 }
 
 function draw() {
+  if(!teclado.loadingResponse) {
     if(teclasFlag) {
       background(colorFondo);  
     } else {
@@ -140,7 +144,6 @@ function draw() {
             peces[i].pasearImage('REVERSE_XY', pez, 140, 200);
         }
     }
-
     
     // TIMER EFECTO DELAY
     ahorita = Date.now();
@@ -148,8 +151,18 @@ function draw() {
       teclasFlag = false;
       teclasTime = ahorita;
     }
+  } else {
+    background('#434248');
+    image(fondo, widthCanvas * 0.5, heightCanvas * 0.5);
+    push();
+    noStroke();
+    fill(colorStars);
+    textAlign(CENTER);
+    textSize(40);
+    text('*** Guardando Respuesta ***', widthCanvas * 0.5, heightCanvas * 0.5)
+    pop();
+  }
 }
-
 
 function makeShadow(img, sigma, shadowColor, opacity) {
     const newW = img.width + 6 * sigma;
@@ -188,8 +201,12 @@ function addLetterSpacing(input, amount, spacer) {
 
 function keyPressed() {
   if((keyCode >= 48 && keyCode <= 90) || (keyCode >= 96 && keyCode <= 111)) {
-    console.log(key);
+    // console.log(key);
     lastChar = key;
+    teclasFlag = true;
+  }
+  if(keyCode === 32) {
+    lastChar = '*';
     teclasFlag = true;
   }
   teclado.selectKey(keyCode, key, 5);
