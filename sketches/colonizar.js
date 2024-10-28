@@ -57,7 +57,7 @@ function setup() {
     teclado = new Teclado('Durante la cosecha del maiz...', 'Durante la cosecha del maiz...');
     if(DEBUG) { teclado.setDebug()}
     teclado.setSound(typed1,bell, returnSound);
-    teclado.setSendData();
+    teclado.setSendData(globalUri);
     imageMode(CENTER)
     randomMilpas();
     resetSketch();

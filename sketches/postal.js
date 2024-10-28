@@ -67,7 +67,7 @@ function setup() {
     teclado = new Teclado(respuestas[askIndex], respuestas[askIndex]);
     teclado.setColor(colorSobre);
     teclado.setColorInstruction(colorSobreInstrucciones);
-    teclado.setSendData();
+    teclado.setSendData(globalUri);
     teclado.setSound(typed1,bell, returnSound);
     setInterval(() =>{    
         counterIndex ++;

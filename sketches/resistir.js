@@ -37,7 +37,7 @@ function setup() {
     cnv.parent("canvasContainer") 
     teclado = new Teclado(instrucciones, instrucciones)
     teclado.setSound(typed1,bell, returnSound);
-    teclado.setSendData();
+    teclado.setSendData(globalUri);
     teclado.setColor(colorResp);
     textFont('Courier New');
     textSize(17);
